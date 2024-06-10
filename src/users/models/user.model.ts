@@ -1,5 +1,6 @@
-import { Column, Model, Table, HasOne } from 'sequelize-typescript';
+import { Column, Model, Table, HasOne, HasMany } from 'sequelize-typescript';
 import { Address } from 'src/address/models/address.model';
+import { Post } from 'src/posts/models/post.model';
 
 @Table
 export class User extends Model {
@@ -14,4 +15,7 @@ export class User extends Model {
 
   @HasOne(() => Address)
   address: Address;
+
+  @HasMany(() => Post)
+  posts: Post[];
 }

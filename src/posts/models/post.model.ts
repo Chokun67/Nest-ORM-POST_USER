@@ -2,18 +2,12 @@ import { Column, Model, Table, ForeignKey, BelongsTo } from 'sequelize-typescrip
 import { User } from '../../users/models/user.model';
 
 @Table
-export class Address extends Model {
+export class Post extends Model<Post> {
   @Column
-  street: string;
+  title: string;
 
   @Column
-  city: string;
-
-  @Column
-  state: string;
-
-  @Column
-  zipCode: string;
+  content: string;
 
   @ForeignKey(() => User)
   @Column

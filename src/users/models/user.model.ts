@@ -1,4 +1,5 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Model, Table, HasOne } from 'sequelize-typescript';
+import { Address } from 'src/address/models/address.model';
 
 @Table
 export class User extends Model {
@@ -10,4 +11,7 @@ export class User extends Model {
 
   @Column({ defaultValue: true })
   isActive: boolean;
+
+  @HasOne(() => Address)
+  address: Address;
 }

@@ -9,8 +9,9 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post(':userId')
-  async create(@Param('userId') userId: number, @Body() CreatePostDto: any): Promise<BlogPost> {
-    return this.postsService.create(CreatePostDto, userId);
+  async create(@Param('userId') userId: number, @Body() createPostDto: any,): Promise<BlogPost> {
+    const { categoryIds, ...postDto } = createPostDto;
+    return this.postsService.create(postDto, userId, categoryIds);
   }
 
   @Get()

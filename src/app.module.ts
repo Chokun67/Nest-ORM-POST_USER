@@ -5,6 +5,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersModule } from './users/users.module';
 import { AddressModule } from './address/address.module';
 import { PostsModule } from './posts/posts.module';
+import { CategoriesModule } from './categories/categories.module';
+import { PostCategory } from './categories/models/post-category.model';
 
 @Module({
   imports: [
@@ -21,6 +23,7 @@ import { PostsModule } from './posts/posts.module';
     UsersModule,
     AddressModule,
     PostsModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

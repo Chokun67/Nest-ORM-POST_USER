@@ -1,4 +1,4 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/sequelize'
@@ -47,6 +47,7 @@ export class UsersService {
   //   return this.userModel.findAll();
   // }
   // include address one-one
+  
   async findAll(): Promise<User[]> {
     return this.userModel.findAll({ include: [Address] });
   }
@@ -59,12 +60,22 @@ export class UsersService {
   //     include:[Address]  
   //   });
   // }
+
   async update(id: string, updateUserDto: any): Promise<User> {
     const user = await this.userModel.findByPk(id);
     if (!user) {
       throw new Error('User not found');
     }
     return user.update(updateUserDto);
+  }
+  
+
+  async updateImage(id: string, imageFilename: string): Promise<User> {
+    const user = await this.userModel.findByPk(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user.update({ image: imageFilename });
   }
   
   async remove(id: string): Promise<void> {

@@ -11,6 +11,9 @@ export class Post extends Model<Post> {
   @Column
   content: string;
 
+  @Column({ allowNull: true }) // ตรวจสอบว่าประกาศ allowNull: true เพื่อให้คอลัมน์รองรับค่า null ได้
+  image: string;
+
   @ForeignKey(() => User)
   @Column
   userId: number;

@@ -19,6 +19,9 @@ export class User extends Model {
   @Column({ defaultValue: true })
   isActive: boolean;
 
+  @Column({ allowNull: true }) // เพิ่มฟิลด์รูปภาพ
+  image: string;
+
   @HasOne(() => Address)
   address: Address;
 

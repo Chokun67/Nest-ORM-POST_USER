@@ -22,10 +22,12 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
-    const user = request.user;
-    const userId = request.params.id;
+    const user = request.user;// form payload in token
+    console.log("param request",request.params);
+    
+    const userId = request.params.userId;
     console.log(user.userId)
-    console.log(userId)
+    console.log("param",userId)
     if (user.userId != userId) {
       throw new ForbiddenException('You are not allowed to update this user');
     }

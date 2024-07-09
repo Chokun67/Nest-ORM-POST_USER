@@ -13,13 +13,7 @@ export class AddressController {
   async create(@Body() createAddressDto: CreateAddressDto): Promise<Address> {
     return this.addressService.create(createAddressDto);
   }
-  // example data create address
-  // {
-  //   "userId": 1,
-  //   "street": "123 Main St",
-  //   "city": "Springfield",
-  //   "state": "IL",
-  //   "zipCode": "62704"}
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Put(':id')
   async update(@Param('id') id: number, @Body() updateAddressDto: any): Promise<Address> {

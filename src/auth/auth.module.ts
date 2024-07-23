@@ -5,7 +5,6 @@ import { UsersModule } from '../users/users.module';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategies';
 import { AuthController } from './auth.controller';
-import { SequelizeModule } from '@nestjs/sequelize';
 import { LocalStrategy } from './strategies/local.strategies';
 import { RolesGuard } from './jwt-auth.guard';
 
@@ -15,7 +14,7 @@ import { RolesGuard } from './jwt-auth.guard';
     PassportModule,
     JwtModule.register({
       secret: 'your_jwt_secret', // ควรเก็บ secret key ใน environment variable
-      signOptions: { expiresIn: '60m' },
+      signOptions: { expiresIn: '8h' },
     }),
   ],
   providers: [AuthService, JwtStrategy, LocalStrategy, RolesGuard],

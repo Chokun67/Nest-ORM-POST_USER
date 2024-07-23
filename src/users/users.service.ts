@@ -26,8 +26,8 @@ export class UsersService {
     });
   }
  
-  async findOne(username: string): Promise<User> {
-    return this.userModel.findOne({ where: { username  },include:[Address] });
+  async findOneUser(username: string): Promise<User> {
+    return this.userModel.findOne({ where: { username  } });
   }
 
   // async create(userDto: any): Promise<User> {
@@ -52,14 +52,14 @@ export class UsersService {
     return this.userModel.findAll({ include: [Address] });
   }
 
-  // findOne(id: string): Promise<User> {
-  //   return this.userModel.findOne({
-  //     where: {
-  //       id,
-  //     },
-  //     include:[Address]  
-  //   });
-  // }
+  findOne(id: string): Promise<User> {
+    return this.userModel.findOne({
+      where: {
+        id,
+      },
+      include:[Address]  
+    });
+  }
 
   async update(id: string, updateUserDto: any): Promise<User> {
     const user = await this.userModel.findByPk(id);

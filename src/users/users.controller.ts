@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, NotFoundException, Put, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, NotFoundException, Put, UseInterceptors, UploadedFile ,Request} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -25,26 +25,29 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User> {
-    const user = await this.usersService.findOne(id);
+  async findOne(@Request() req): Promise<User> {
+    console.log(req.user,"test");
+    
+    const user = await this.usersService.findOne(req.user.userId);
+    
     if (!user) {
       throw new NotFoundException(`User with id user not found`);
     }
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Put(':id')
-  async updateUser(@Param('id') id: string, @Body() updateUserDto: any) {
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Put(':userId')
+  async updateUser(@Param('userId') id: string, @Body() updateUserDto: any) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(':id/image')
+  @Put(':userId/image')
   @UseInterceptors(FileInterceptor('image'))
-  async updateUserImage(@Param('id') id: string, @UploadedFile() image?: Express.Multer.File) {
+  async updateUserImage(@Param('userId') id: string, @UploadedFile() image?: Express.Multer.File) {
     if (!image) {
       throw new NotFoundException('No image file uploaded');
     }

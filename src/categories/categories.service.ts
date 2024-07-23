@@ -16,4 +16,8 @@ export class CategoriesService {
       async findAll(): Promise<Category[]> {
         return this.categoryModel.findAll();
       }
+
+      async findBycategory(): Promise<Category[]> {
+        return this.categoryModel.findAll();
+      }
 }

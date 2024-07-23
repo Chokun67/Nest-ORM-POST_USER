@@ -11,7 +11,7 @@ async function bootstrap() {
 
   // เสิร์ฟไฟล์สาธารณะจากโฟลเดอร์ uploads
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
-    prefix: '/uploads/', // ตั้งค่า URL prefix สำหรับไฟล์อัปโหลด
+    prefix: '/uploads/',
   });
   app.enableCors({
     origin: '*', // หรือใช้ '*' เพื่ออนุญาตทุกแหล่งที่มา
@@ -24,7 +24,11 @@ async function bootstrap() {
     .setDescription('The cats API description')
     .setVersion('1.0')
     .addTag('test')
-    .addBearerAuth()
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    },'access-token',)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

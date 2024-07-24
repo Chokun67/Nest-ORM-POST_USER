@@ -1,6 +1,7 @@
 import { Column, Model, Table, HasOne, HasMany } from 'sequelize-typescript';
 import { Address } from 'src/address/models/address.model';
 import { Post } from 'src/posts/models/post.model';
+import { Comment } from 'src/comments/models/comment.model';
 
 @Table
 export class User extends Model {
@@ -27,4 +28,7 @@ export class User extends Model {
 
   @HasMany(() => Post)
   posts: Post[];
+
+  @HasMany(() => Comment) // เพิ่มส่วนนี้สำหรับความสัมพันธ์กับ Comment
+  comments: Comment[];
 }

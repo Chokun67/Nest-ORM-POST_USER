@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class AppService implements OnModuleInit {
-  constructor(private sequelize: Sequelize) {}
+  constructor(private readonly sequelize: Sequelize) {}
 
   async onModuleInit() {
     try {

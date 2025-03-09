@@ -13,7 +13,7 @@ export class UsersService {
     @InjectModel(User)
     private readonly userModel: typeof User,
     @InjectModel(Address)
-    private addressModel: typeof Address
+    private readonly addressModel: typeof Address
   ) {}
 
   create(createUserDto: CreateUserDto): Promise<User> {

@@ -13,22 +13,25 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
   });
+
   app.enableCors({
-    origin: '*', // หรือใช้ '*' เพื่ออนุญาตทุกแหล่งที่มา
+    origin: '*', // หรือระบุเฉพาะโดเมน
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: ['Authorization', 'Content-Type'], // ✅ ต้องอนุญาต Authorization
     credentials: true,
   });
   
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Community Swagger')
+    .setDescription('Community API Description')
     .setVersion('1.0')
     .addTag('test')
     .addBearerAuth({
-      type: 'http',
-      scheme: 'bearer',
-      bearerFormat: 'JWT',
-    },'access-token',)
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',  // บังคับให้ JWT อยู่ใน Header
+      },)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

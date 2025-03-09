@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './models/user.model';
 import { JwtAuthGuard, RolesGuard } from 'src/auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 
@@ -27,13 +27,15 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Request() req): Promise<User> {
-    console.log(req.user,"test");
-    
-    const user = await this.usersService.findOne(req.user.userId);
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', type: String, description: 'User ID' })  // เพิ่มการกำหนดพารามิเตอร์ให้ Swagger
+  async findOne(@Param('id') id: string): Promise<User> {
+    console.log(id, "test");
+
+    const user = await this.usersService.findOne(id);
     
     if (!user) {
-      throw new NotFoundException(`User with id user not found`);
+      throw new NotFoundException(`User with id ${id} not found`);
     }
     return user;
   }
